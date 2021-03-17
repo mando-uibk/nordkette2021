@@ -25,23 +25,27 @@ Treatment 1 for biases Decoy, Anchoring, Framing, Mental Accounting and Conjunct
 class Constants(BaseConstants):
     name_in_url = 'Biases_T1'
     players_per_group = None
-    num_rounds = 1
+    task_sequences = [
+        ['Decoy', 'Anchoring', 'Framing', 'MentalAccounting'],
+        ['MentalAccounting', 'Framing', 'Anchoring', 'Decoy'],
+        ['Framing', 'Anchoring', 'Decoy', 'MentalAccounting']
+    ]
+    num_rounds = 5  # length of task_sequences + 1 for Conjunction Fallacy
+
 
 # ******************************************************************************************************************** #
 # *** CLASS SUBSESSION *** #
 # ******************************************************************************************************************** #
 class Subsession(BaseSubsession):
     def creating_session(self):
-        from .pages import initial_page_sequence
-        ini = [i.__name__ for i in initial_page_sequence]
-        for p in self.get_players():
-            pb = ini.copy()
-            random.shuffle(pb)
-            p.page_sequence_t1 = json.dumps(random.choice([['Decoy','Anchoring','Framing','MentalAccounting','ConjunctionFallacy'],
-                                                       ['MentalAccounting','Framing','Anchoring','Decoy','ConjunctionFallacy'],
-                                                        ['Framing','Anchoring','Decoy','MentalAccounting','ConjunctionFallacy']]))
-            p.participant.vars["page_count"] = 1
-            p.participant.vars["task_sequence"] = p.page_sequence_t1
+        if self.round_number == 1:
+            for p in self.get_players():
+                round_numbers = list(range(1, Constants.num_rounds+1))
+                task_sequence = random.choice(Constants.task_sequences) + ['ConjunctionFallacy']
+                p.participant.vars["page_count"] = 1
+                p.participant.vars["page_sequence"] = dict(zip(task_sequence, round_numbers))
+                p.participant.vars["task_sequence"] = task_sequence
+                p.page_sequence_t1 = json.dumps(task_sequence)
 
 
 

@@ -8,8 +8,13 @@ import json
 # *** PAGE DECOY *** #
 # ******************************************************************************************************************** #
 class Decoy(Page):
+    def is_displayed(self):
+        return self.round_number == self.participant.vars['page_sequence']['Decoy']
+
     def before_next_page(self):
         self.participant.vars["page_count"] += 1
+        if self.round_number != 1:
+            self.player.in_round(1).decoy_t2 = self.player.decoy_t2
 
     # form model and form fields
     # ----------------------------------------------------------------------------------------------------------------
@@ -44,8 +49,14 @@ class Decoy(Page):
 # *** PAGE ANCHORING *** #
 # ******************************************************************************************************************** #
 class Anchoring(Page):
+    def is_displayed(self):
+        return self.round_number == self.participant.vars['page_sequence']['Anchoring']
+
     def before_next_page(self):
         self.participant.vars["page_count"] += 1
+        if self.round_number != 1:
+            self.player.in_round(1).anchoring_t2_buy = self.player.anchoring_t2_buy
+            self.player.in_round(1).anchoring_t2_wtp = self.player.anchoring_t2_wtp
 
     # form model and form fields
     # ----------------------------------------------------------------------------------------------------------------
@@ -81,8 +92,13 @@ class Anchoring(Page):
 # *** PAGE FRAMING *** #
 # ******************************************************************************************************************** #
 class Framing(Page):
+    def is_displayed(self):
+        return self.round_number == self.participant.vars['page_sequence']['Framing']
+
     def before_next_page(self):
         self.participant.vars["page_count"] += 1
+        if self.round_number != 1:
+            self.player.in_round(1).framing_t2 = self.player.framing_t2
 
     # form model and form fields
     # ----------------------------------------------------------------------------------------------------------------
@@ -116,8 +132,13 @@ class Framing(Page):
 # *** PAGE MENTAL ACCOUNTING *** #
 # ******************************************************************************************************************** #
 class MentalAccounting(Page):
+    def is_displayed(self):
+        return self.round_number == self.participant.vars['page_sequence']['MentalAccounting']
+
     def before_next_page(self):
         self.participant.vars["page_count"] += 1
+        if self.round_number != 1:
+            self.player.in_round(1).mental_accounting_t2 = self.player.mental_accounting_t2
 
     # form model and form fields
     # ----------------------------------------------------------------------------------------------------------------
@@ -148,29 +169,9 @@ class MentalAccounting(Page):
         }
 
 
-initial_page_sequence = [
+page_sequence = [
     Decoy,
     Anchoring,
     Framing,
     MentalAccounting,
 ]
-
-#compute page sequence
-page_sequence = [
-
-]
-
-class MyPage(Page):
-    def inner_dispatch(self):
-        page_seq = int(self.__class__.__name__.split('_')[1])
-        page_to_show = json.loads(self.player.page_sequence_t2)[page_seq]
-        self._is_frozen = False
-        self.__class__ = globals()[page_to_show]
-        return super(globals()[page_to_show], self).inner_dispatch()
-
-
-for i, _ in enumerate(initial_page_sequence):
-    NewClassName = "Page_{}".format(i)
-    A = type(NewClassName, (MyPage,), {})
-    locals()[NewClassName] = A
-    page_sequence.append(locals()[NewClassName])

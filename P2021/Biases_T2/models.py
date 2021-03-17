@@ -25,19 +25,19 @@ Treatment 2 for biases Decoy, Anchoring, Framing, Mental Accounting and Conjunct
 class Constants(BaseConstants):
     name_in_url = 'Biases_T2'
     players_per_group = None
-    num_rounds = 1
+    num_rounds = 4  # one less than in T1, Conjunction Fallacy is missing.
 
 # ******************************************************************************************************************** #
 # *** CLASS SUBSESSION *** #
 # ******************************************************************************************************************** #
 class Subsession(BaseSubsession):
     def creating_session(self):
-        from .pages import initial_page_sequence
-        ini = [i.__name__ for i in initial_page_sequence]
-        for p in self.get_players():
-            pb = ini.copy()
-            random.shuffle(pb)
-            p.page_sequence_t2 = str(p.participant.vars["task_sequence"][:-23:]) + str(p.participant.vars["task_sequence"][-1:])#without conjunction fallacy
+        if self.round_number == 1:
+            for p in self.get_players():
+                round_numbers = list(range(1, Constants.num_rounds+1))
+                task_sequence = p.participant.vars["task_sequence"][:-1]  # without Conjunction Fallacy
+                p.participant.vars["page_sequence"] = dict(zip(task_sequence, round_numbers))
+                p.page_sequence_t2 = json.dumps(task_sequence)
 
 # ******************************************************************************************************************** #
 # *** CLASS GROUP *** #

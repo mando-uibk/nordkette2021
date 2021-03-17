@@ -7,34 +7,34 @@ from .models import Constants
 
 class PlayerBot(Bot):
     def play_round(self):
-        if self.participant.vars["task_sequence"][:3] == """["D""":
-            # ------------------------------------------------------------------------------------------------------------ #
-            # make decisions
-            # ------------------------------------------------------------------------------------------------------------ #
-            yield (pages.Page_0, {'decoy_t1': random.choice(['C', 'T'])}) #Decoy
-            yield (pages.Page_1, {'anchoring_t1_wtp': random.randint(0,100)}) #Anchoring
-            yield (pages.Page_2, {'framing_t1': random.choice(['A','B'])}) #Framing
-            yield (pages.Page_3, {'mental_accounting_t1': random.randint(0,1)}) # MA
-            yield (pages.Page_4, {'conjunction_fallacy': random.randint(0,1)})# CJ
+        decoy_valid = {'decoy_t1': random.choice(['C', 'T'])}
+        anchoring_valid = {'anchoring_t1_wtp': random.randint(0, 100)}
+        framing_valid = {'framing_t1': random.choice(['A', 'B'])}
+        mental_valid = {'mental_accounting_t1': random.randint(0, 1)}
+        conjunction_valid = {'conjunction_fallacy': random.randint(0,1)}
 
-        elif self.participant.vars["task_sequence"][:3] == """["M""":
-            # ------------------------------------------------------------------------------------------------------------ #
-            # make decisions
-            # ------------------------------------------------------------------------------------------------------------ #
-            yield (pages.Page_0, {'mental_accounting_t1': random.randint(0,1)}) # MA
-            yield (pages.Page_1, {'framing_t1': random.choice(['A','B'])}) #Framing
-            yield (pages.Page_2, {'anchoring_t1_wtp': random.randint(0, 100)})  # Anchoring
-            yield (pages.Page_3, {'decoy_t1': random.choice(['C', 'D', 'T'])})  # Decoy
-            yield (pages.Page_4, {'conjunction_fallacy': random.randint(0,1)})# CJ
+        page_sequence = {
+            'Decoy': {
+                1: (pages.Decoy, decoy_valid),
+                2: (pages.Anchoring, anchoring_valid),
+                3: (pages.Framing, framing_valid),
+                4: (pages.MentalAccounting, mental_valid),
+                5: (pages.ConjunctionFallacy, conjunction_valid)
+            },
+            'MentalAccounting': {
+                1: (pages.MentalAccounting, mental_valid),
+                2: (pages.Framing, framing_valid),
+                3: (pages.Anchoring, anchoring_valid),
+                4: (pages.Decoy, decoy_valid),
+                5: (pages.ConjunctionFallacy, conjunction_valid)
+            },
+            'Framing': {
+                1: (pages.Framing, framing_valid),
+                2: (pages.Anchoring, anchoring_valid),
+                3: (pages.Decoy, decoy_valid),
+                4: (pages.MentalAccounting, mental_valid),
+                5: (pages.ConjunctionFallacy, conjunction_valid)
+            }
+        }
 
-        elif self.participant.vars["task_sequence"][:3] == """["F""":
-            # ------------------------------------------------------------------------------------------------------------ #
-            # make decisions
-            # ------------------------------------------------------------------------------------------------------------ #
-            yield (pages.Page_0, {'framing_t1': random.choice(['A','B'])}) #Framing
-            yield (pages.Page_1, {'anchoring_t1_wtp': random.randint(0, 100)})  # Anchoring
-            yield (pages.Page_2, {'decoy_t1': random.choice(['C', 'D', 'T'])})  # Decoy
-            yield (pages.Page_3, {'mental_accounting_t1': random.randint(0,1)}) # MA
-            yield (pages.Page_4, {'conjunction_fallacy': random.randint(0,1)})# CJ
-
-
+        yield page_sequence[self.participant.vars['task_sequence'][0]][self.round_number]

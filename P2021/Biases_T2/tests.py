@@ -7,39 +7,33 @@ import random
 
 class PlayerBot(Bot):
     def play_round(self):
-        if self.participant.vars["task_sequence"][:3] == """["D""": # Sequence starting with Decoy
-            # ------------------------------------------------------------------------------------------------------------ #
-            # make decisions
-            # ------------------------------------------------------------------------------------------------------------ #
-            yield (pages.Page_0, {'decoy_t2': random.choice(['C', 'D', 'T'])}) #Decoy
-            yield (pages.Page_1, random.choice(({"anchoring_t2_buy" : 0,
-                                                 'anchoring_t2_wtp': random.randint(0,75)},
-                                                {"anchoring_t2_buy" :1,
-                                                 'anchoring_t2_wtp': random.randint(76,100)}))) #Anchoring
-            yield (pages.Page_2, {'framing_t2': random.choice(['A','B'])}) # Framing
-            yield (pages.Page_3, {'mental_accounting_t2': random.randint(0,1)}) # MA
+        decoy_valid = {'decoy_t2': random.choice(['C', 'D', 'T'])}
+        anchoring_valid = random.choice((
+            {"anchoring_t2_buy": 0, 'anchoring_t2_wtp': random.randint(0, 75)},
+            {"anchoring_t2_buy": 1, 'anchoring_t2_wtp': random.randint(76, 100)}
+        ))
+        framing_valid = {'framing_t2': random.choice(['A', 'B'])}
+        mental_valid = {'mental_accounting_t2': random.randint(0, 1)}
 
-        elif self.participant.vars["task_sequence"][:3] == """["M""": # Sequence starting with Mental Accounting
-            # ------------------------------------------------------------------------------------------------------------ #
-            # make decisions
-            # ------------------------------------------------------------------------------------------------------------ #
-            yield (pages.Page_0, {'mental_accounting_t2': random.randint(0,1)}) # MA
-            yield (pages.Page_1, {'framing_t2': random.choice(['A','B'])}) # Framing
-            yield (pages.Page_2, random.choice(({"anchoring_t2_buy":0,
-                                                 'anchoring_t2_wtp': random.randint(0, 75)},
-                                                {"anchoring_t2_buy": 1,
-                                                 'anchoring_t2_wtp': random.randint(76, 100)}))) # Anchoring
-            yield (pages.Page_3, {'decoy_t2': random.choice(['C', 'D', 'T'])})  # Decoy
+        page_sequence = {
+            'Decoy': {
+                1: (pages.Decoy, decoy_valid),
+                2: (pages.Anchoring, anchoring_valid),
+                3: (pages.Framing, framing_valid),
+                4: (pages.MentalAccounting, mental_valid)
+            },
+            'MentalAccounting': {
+                1: (pages.MentalAccounting, mental_valid),
+                2: (pages.Framing, framing_valid),
+                3: (pages.Anchoring, anchoring_valid),
+                4: (pages.Decoy, decoy_valid)
+            },
+            'Framing': {
+                1: (pages.Framing, framing_valid),
+                2: (pages.Anchoring, anchoring_valid),
+                3: (pages.Decoy, decoy_valid),
+                4: (pages.MentalAccounting, mental_valid),
+            }
+        }
 
-        elif self.participant.vars["task_sequence"][:3] == """["F""": # Sequence starting with Framing
-            # ------------------------------------------------------------------------------------------------------------ #
-            # make decisions
-            # ------------------------------------------------------------------------------------------------------------ #
-            yield (pages.Page_0, {'framing_t2': random.choice(['A','B'])}) #Framing
-            yield (pages.Page_1, random.choice(({"anchoring_t2_buy": 0,
-                                                 'anchoring_t2_wtp': random.randint(0, 75)},
-                                                {"anchoring_t2_buy": 1,
-                                                 'anchoring_t2_wtp': random.randint(76, 100)}))) # Anchoring
-            yield (pages.Page_2, {'decoy_t2': random.choice(['C', 'D', 'T'])})  # Decoy
-            yield (pages.Page_3, {'mental_accounting_t2': random.randint(0,1)}) # MA
-
+        yield page_sequence[self.participant.vars['task_sequence'][0]][self.round_number]
