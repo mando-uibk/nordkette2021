@@ -18,7 +18,7 @@ class SubIntro(Page):
 class FinLit(Page):
 
     #specify form models and form fields
-    form_model = models.Player
+    form_model = 'player'
     form_fields = ['interest_compounding','real_interest','diversification',
                    'bond_pricing','credit_interest']
 

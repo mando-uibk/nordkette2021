@@ -10,7 +10,7 @@ class Demographics(Page):
 
     # specify form field and form model
     # ----------------------------------------------------------------------------------------------------------------
-    form_model = models.Player
+    form_model = 'player'
     form_fields = ['age','gender','religion','school_type','school_level','math_skill','german_skill',
                    'education_mother','education_father']
 

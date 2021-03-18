@@ -7,7 +7,7 @@ from . import models
 # *** PAGE SUB INTRO *** #
 # ******************************************************************************************************************** #
 class Intro(Page):
-    form_model = models.Player
+    form_model = 'player'
     form_fields = ['class_identifier','school_identifier']
 
 

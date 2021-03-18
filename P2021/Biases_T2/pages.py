@@ -18,7 +18,7 @@ class Decoy(Page):
 
     # form model and form fields
     # ----------------------------------------------------------------------------------------------------------------
-    form_model = models.Player
+    form_model = 'player'
     form_fields = ['decoy_t2']
 
     # variables for template
@@ -60,7 +60,7 @@ class Anchoring(Page):
 
     # form model and form fields
     # ----------------------------------------------------------------------------------------------------------------
-    form_model = models.Player
+    form_model = 'player'
     form_fields = ['anchoring_t2_buy','anchoring_t2_wtp']
 
     # variables for template
@@ -102,7 +102,7 @@ class Framing(Page):
 
     # form model and form fields
     # ----------------------------------------------------------------------------------------------------------------
-    form_model = models.Player
+    form_model = 'player'
     form_fields = ['framing_t2']
 
     # variables for template
@@ -142,7 +142,7 @@ class MentalAccounting(Page):
 
     # form model and form fields
     # ----------------------------------------------------------------------------------------------------------------
-    form_model = models.Player
+    form_model = 'player'
     form_fields = ['mental_accounting_t2']
 
     # variables for template

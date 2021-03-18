@@ -4,7 +4,7 @@ from .models import Constants
 from . import models
 
 class Outro(Page):
-    form_model = models.Player
+    form_model = 'player'
     form_fields = ['e_mail_address']
 
 class Closing(Page):

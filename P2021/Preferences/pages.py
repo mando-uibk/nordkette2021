@@ -17,7 +17,7 @@ class SubIntro(Page):
 # ******************************************************************************************************************** #
 class RiskPreference(Page):
     #specify form models and form fields
-    form_model = models.Player
+    form_model = 'player'
     form_fields = ['risk_preference','fail_counter_heads','fail_counter_tails']
 
     def vars_for_template(self):
@@ -45,7 +45,7 @@ class RiskPreference(Page):
 # ******************************************************************************************************************** #
 class TimePreference(Page):
     #specify form models and form fields
-    form_model = models.Player
+    form_model = 'player'
     form_fields = ['time_preference_1','time_preference_2','time_preference_3','time_preference_4',
                    'time_preference_5','time_preference_6','fail_counter_tp']
 

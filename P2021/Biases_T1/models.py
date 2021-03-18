@@ -66,5 +66,3 @@ class Player(BasePlayer):
     mental_accounting_t1 = models.IntegerField()
     conjunction_fallacy = models.IntegerField()
 
-
-

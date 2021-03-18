@@ -17,7 +17,7 @@ class SubIntro(Page):
 # ******************************************************************************************************************** #
 class Field_Behavior(Page):
     #specify form models and form fields
-    form_model = models.Player
+    form_model = 'player'
     form_fields = ['gambling','general_risk','saving','temptation']
 
     def vars_for_template(self):
@@ -42,7 +42,7 @@ class Field_Behavior(Page):
 
 class Perception_Questions(Page):
     #specify form models and form fields
-    form_model = models.Player
+    form_model = 'player'
     form_fields = ['financial_troubles','fin_education_school','fin_education_parents']
 
     def vars_for_template(self):
