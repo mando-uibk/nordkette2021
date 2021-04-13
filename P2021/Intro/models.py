@@ -47,3 +47,4 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     class_identifier = models.StringField()
     school_identifier = models.StringField()
+    location = models.StringField()

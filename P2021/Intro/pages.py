@@ -8,7 +8,7 @@ from . import models
 # ******************************************************************************************************************** #
 class Intro(Page):
     form_model = 'player'
-    form_fields = ['class_identifier','school_identifier']
+    form_fields = ['class_identifier','school_identifier','location']
 
 
 # ******************************************************************************************************************** #

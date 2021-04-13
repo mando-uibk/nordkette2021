@@ -32,7 +32,7 @@ ADMIN_USERNAME = 'admin'
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
 DEMO_PAGE_INTRO_HTML = """
-Projekt 6020
+Survey to "What Influences Adolescents’ Financial Literacy and Susceptibility to Behavioral Bias?" by Aschenwald et al. (2021)
 """
 
 SECRET_KEY = 'w+n$&giajvep0-lgt73lrj!g1iflha9ny!#gsrp-w9j(^i#a%d'

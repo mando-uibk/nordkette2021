@@ -11,5 +11,6 @@ class PlayerBot(Bot):
         # submit Intro page
         # ------------------------------------------------------------------------------------------------------------ #
         yield (pages.Intro, {"class_identifier": str(random.choice(list(range(1,5)))) + random.choice(['A','B','C']),
-                             "school_identifier": random.choice(["HAK","AHS","MS","Poly"])})
+                             "school_identifier": random.choice(["HAK","AHS","MS","Poly"]),
+                             "location": random.choice(["school","home"])})
         yield (pages.SubIntro)

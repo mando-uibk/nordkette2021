@@ -35,26 +35,36 @@
                 Der Fragebogen ist selbstverständlich anonym.
             </p>
             <p>
-                Bevor du mit dem Fragebogen startest, teile uns bitte noch mit, in welche Klasse du gehst und welche Schule
-                du besuchst.
+                Bevor du mit dem Fragebogen startest, teile uns bitte noch mit, in welche Klasse du gehst, welche Schule
+                du besuchst und ob du dich beim Beantworten der Umfrage in der Schule oder zuhause befindest.
             </p>
             <p>
-                <div class="input-group mb-3" style="width: 10em; margin-top: 10px">
+                <div class="input-group mb-3" style="width: 10em;">
                     <div class="input-group">
                         <span class="input-group-text" id="inputGroup-sizing-default ">Klasse</span>
-                        <input type="text" class="form-control" name="class_identifier" placeholder="2BK" required>
+                        <input type="text" class="form-control" name="class_identifier" placeholder="2B" required>
                     </div>
                 </div>
+                <div style="font-style: italic;font-size: small;margin-top: -15px">Hier bitte die Bezeichnung der Klasse und nicht der Schulstufe.</div>
             </p>
             <p>
-                <div class="input-group mb-3" style="width: 15em; margin-top: 10px">
+                <div class="input-group mb-3" style="width: 22.5em; margin-top: 10px">
                     <div class="input-group">
                         <span class="input-group-text" id="inputGroup-sizing-default ">Schule</span>
-                        <input type="text" class="form-control" name="school_identifier" placeholder="HAK Innsbruck" required>
+                        <input type="text" class="form-control" name="school_identifier" placeholder="Bundesrealgymnasium Innsbruck" required>
                     </div>
                 </div>
+                <div style="font-style: italic;font-size: small;margin-top: -15px">Hier bitte den vollständigen Namen der Schule.</div>
             </p>
+            <div>
+                <input type="radio" name="location" value="school" style="margin-bottom: 10px" required> Ich beantworte die Umfrage in der Schule. </br>
+                <input type="radio" name="location" value="home" required> Ich beantworte die Umfrage von zuhause aus.
+            </div>
         </div>
+
+<div class="alert alert-info">
+  <b>Hinweis:</b> Falls du ein Smartphone benutzt, verwende es im Querformat für eine optimale Darstellung des Fragebogens.
+</div>
 
         <div style="text-align: center">
         <button class="otree-btn-next btn btn-primary">Weiter</button>
